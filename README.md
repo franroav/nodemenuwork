@@ -9,7 +9,7 @@ Steps to run this project:
 
 ## Clone Project
 
-1.- Open your terminal and got the folder wehre you wat to download the project. then execute the following command `git clone https://github.com/franroav/nodemenuwork`, this will download the project into your local machine
+1.- Open your terminal and got the folder wehre you wat to download the project. then execute the following command `git clone https://github.com/franroav/nodemenuwork.git`, this will download the project into your local machine
 
 ## Install dependencies
 
