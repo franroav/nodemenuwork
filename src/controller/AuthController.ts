@@ -41,7 +41,7 @@ class AuthController {
       expiresIn: "1h",
     });
 
-    res.json({ message: "OK", token }); /**/
+    res.json({ message: "OK", token, userId: user.id }); /**/
   };
 
   static changePassword = async (req: Request, res: Response) => {

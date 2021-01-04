@@ -56,7 +56,7 @@ export class CharacterController {
   static deleteCharacter = async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const deleteCharacter = CharacterModel.deleteCharacter(req, res, id);
+    const deleteCharacter = CharacterModel.deleteCharacter(req, res);
 
     return deleteCharacter;
   };

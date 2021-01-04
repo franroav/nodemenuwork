@@ -15,7 +15,7 @@ router.get("/", CharacterController.getAll);
 router.get("/:id", CharacterController.getById);
 
 // create a new character
-router.post("/", [checkJwt], CharacterController.newCharacter);
+router.post("/", CharacterController.newCharacter);
 
 // Edit character
 router.put(

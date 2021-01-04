@@ -16,21 +16,11 @@ export class CharacterModel {
   static getAll = async (req: Request, res: Response) => {
     try {
       api.get(service + "character").then((Character) => {
-        console.log(Character.data.results);
         res.send(Character.data.results);
       });
-      //const CharacterRepository = getRepository(Character);
-      //let Characters;
-
-      // Characters = await CharacterRepository.find();
     } catch (error) {
       res.status(404).json({ message: "Something Went Wrong", error: error });
     }
-
-    /*if (Characters.length > 0) {
-      res.send(Characters);
-    } else {
-    }*/
   };
 
   static getAllFavorites = async (req: Request, res: Response) => {
@@ -58,14 +48,6 @@ export class CharacterModel {
     } catch (error) {
       res.status(404).json({ message: "There are No Results" });
     }
-
-    /* const CharacterRepository = getRepository(Character);
-    try {
-      const Character = await CharacterRepository.findOneOrFail(id);
-      res.send(Character);
-    } catch (error) {
-      res.status(404).json({ message: "There are No Results" });
-    }*/
   };
 
   //CREATE Character
@@ -73,6 +55,7 @@ export class CharacterModel {
     // destructuring
     console.log(req.body);
     const {
+      user_id,
       id,
       name,
       status,
@@ -86,20 +69,9 @@ export class CharacterModel {
       url,
       created,
     } = req.body;
-    /* try {
-      api.post<any>(db + "characters").then((response) => {
-        console.log(response.data.results);
-
-        res.send(response);
-        res.status(201).json({
-          message: "Character created successfully!" + response.data.results,
-        });
-      });
-    } catch (error) {
-      return res.status(409).json({ message: "There are No Results" });
-    }*/
 
     const character = new Character();
+    character.user_id = user_id;
     character.id = id;
     character.name = name;
     character.status = status;
@@ -135,6 +107,8 @@ export class CharacterModel {
   };
 
   static editCharacter = async (req: Request, res: Response, id: number) => {
+    //hold Character
+    let character;
     //destructuring
     const {
       name,
@@ -143,41 +117,39 @@ export class CharacterModel {
       type,
       gender,
       location,
+      origin,
       image,
       episode,
       url,
       created,
     } = req.body;
-    try {
-      api.put<any>(db + `${"character/" + id}`).then((response) => {
-        console.log(response.data.results);
-
-        //res.send(response.data.results);
-        res.status(201).json({
-          message: "Character created successfully!" + response.data.results,
-        });
-      });
-    } catch (error) {
-      return res.status(409).json({ message: "There are No Results" });
-    }
-    //hold Character
-    /* let Character;
 
     const CharacterRepository = getRepository(Character);
 
     // try get Character
     try {
-      Character = await CharacterRepository.findOneOrFail(id);
+      character = await CharacterRepository.findOneOrFail(id);
     } catch (error) {
       return res.status(404).json({ message: "Character not found" });
     }
 
-    Character.Charactername = Charactername;
-    Character.fullname = fullname;
-    Character.age = age;
+    character.name = name;
+    character.status = status;
+    character.species = species;
+    character.type = type;
+    character.origin = origin;
+    character.gender = gender;
+    character.location = location;
+    character.origin = status;
+    character.image = image;
+    character.episode = episode;
+    character.url = url;
+    character.created = created;
 
-    const validationCharacter = { validationError: { target: false, value: false } };
-    const errors = await validate(Character, validationCharacter);
+    const validationCharacter = {
+      validationError: { target: false, value: false },
+    };
+    const errors = await validate(character, validationCharacter);
     console.log("err", errors);
 
     if (errors.length > 0) {
@@ -186,26 +158,26 @@ export class CharacterModel {
 
     // try to save Character
     try {
-      await CharacterRepository.save(Character);
+      await CharacterRepository.save(character);
     } catch (error) {
       res.status(409).json({ message: "Character already exists" });
     }
-    res.status(200).json({ message: "Character update" });*/
+    res.status(200).json({ message: "Character update" });
   };
 
-  static deleteCharacter = async (req: Request, res: Response, id: number) => {
-    // const { id } = req.params;
-    /*const CharacterRepository = getRepository(Character);
-    let Character: Character;
+  static deleteCharacter = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const CharacterRepository = getRepository(Character);
+    let character: Character;
 
     try {
-      Character = await CharacterRepository.findOneOrFail(id);
+      character = await CharacterRepository.findOneOrFail(id);
     } catch (error) {
       return res.status(404).json({ message: "Character not found" });
     }
 
     CharacterRepository.delete(id);
-    res.status(200).json({ message: "Character deleted" });*/
+    res.status(200).json({ message: "Character deleted" });
   };
 }
 

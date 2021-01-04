@@ -11,6 +11,9 @@ export class Character {
   id: number;
 
   @Column()
+  user_id: number;
+
+  @Column()
   @MinLength(6)
   @IsNotEmpty()
   name: string;
